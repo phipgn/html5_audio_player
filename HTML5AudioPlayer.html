@@ -1,0 +1,34 @@
+<head>
+<title>HTML5 Audio Player</title>
+<link href="HTML5AudioPlayer.png" rel="icon" type="image/x-icon" />
+<script src="jquery-2.2.2.min.js"></script>
+</head>
+<body>
+<b id='mp3Name'>Please select an audio file.</b><br />
+<br />
+<input id='fileOpener' type='file' accept='audio/*'/><br />
+<br />
+<audio style='width:500px;' id='audioPlayer' controls></audio>
+<script>
+
+document.getElementById("fileOpener").addEventListener('change', playAudio, false);
+
+function playAudio() {
+	var file = this.files[0];
+	var fileURL = URL.createObjectURL(file);
+	console.log(fileURL);
+	
+	var path = $("#fileOpener")[0].value;
+	path = path.split("\\");
+	var filename = path[path.length - 1];
+	$("#mp3Name").text(filename);
+	
+	var audio = document.getElementById("audioPlayer");	
+	audio.src = fileURL;
+	audio.play();
+	audio.title = filename;
+	
+}
+
+</script>
+</body>
