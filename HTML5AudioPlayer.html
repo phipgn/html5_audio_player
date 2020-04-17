@@ -1,34 +1,48 @@
 <head>
-<title>HTML5 Audio Player</title>
+<title>Audio Player</title>
 <link href="HTML5AudioPlayer.png" rel="icon" type="image/x-icon" />
-<script src="jquery-2.2.2.min.js"></script>
+<style>
+	body{background:#000;color:#fff;}
+	#tblAudio{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+	table,td,th{border-collapse:collapse;font-family:Tahoma;font-size:12px;padding:5px;border:0px solid #ccc;}
+	td{text-align:center;}
+</style>
 </head>
 <body>
-<b id='mp3Name'>Please select an audio file.</b><br />
-<br />
-<input id='fileOpener' type='file' accept='audio/*'/><br />
-<br />
-<audio style='width:500px;' id='audioPlayer' controls></audio>
-<script>
+	<center>
+		<table id="tblAudio">
+				<tr>
+					<td><h3 id="mp3-name"></h3></td>
+				</tr>
+				<tr>
+					<td>Select audio file: <input id='file-opener' type='file' accept='audio/*'/></td>
+				</tr>
+				<tr>
+					<td><audio style='width:500px;' id='audioPlayer' controls></audio></td>
+				</tr>
+		</table>
+	</center>
 
-document.getElementById("fileOpener").addEventListener('change', playAudio, false);
+	<script>
+		let fileOpener = document.getElementById("file-opener");
+		fileOpener.addEventListener("change", playAudio, false);
 
-function playAudio() {
-	var file = this.files[0];
-	var fileURL = URL.createObjectURL(file);
-	console.log(fileURL);
-	
-	var path = $("#fileOpener")[0].value;
-	path = path.split("\\");
-	var filename = path[path.length - 1];
-	$("#mp3Name").text(filename);
-	
-	var audio = document.getElementById("audioPlayer");	
-	audio.src = fileURL;
-	audio.play();
-	audio.title = filename;
-	
-}
+		function playAudio() {
+			var file = this.files[0];
+			var fileURL = URL.createObjectURL(file);
+			console.log(fileURL);
 
-</script>
+			var path = fileOpener.value;
+			path = path.split("\\");
+			var filename = path[path.length - 1];
+
+			let mp3Name = document.getElementById("mp3-name");
+			mp3Name.innerText = filename;
+
+			var audio = document.getElementById("audioPlayer");
+			audio.src = fileURL;
+			audio.play();
+			audio.title = filename;
+		}
+	</script>
 </body>
